@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'AKViewController_Example' do
+  pod 'AKViewController', :path => '../'
+
+  target 'AKViewController_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
