@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0615F3DED1B776A1FA22B46D /* Pods_AKViewController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396DAEBDF8F2DA8939FD3FD1 /* Pods_AKViewController_Tests.framework */; };
+		0DF4A4BA1D86B2D900C02881 /* state_no_wifi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF4A4B81D86B2D900C02881 /* state_no_wifi@2x.png */; };
+		0DF4A4BB1D86B2D900C02881 /* state_no_wifi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF4A4B91D86B2D900C02881 /* state_no_wifi@3x.png */; };
 		1BB94DE6F11C56E90E516289 /* Pods_AKViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B950B4148EF5F1DC0D11633B /* Pods_AKViewController_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -15,7 +17,7 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* AKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* AKAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* AKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* AKViewController.m */; };
+		6003F5A7195388D20070C39A /* AKViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* AKViewController1.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DF4A4B81D86B2D900C02881 /* state_no_wifi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_no_wifi@2x.png"; sourceTree = "<group>"; };
+		0DF4A4B91D86B2D900C02881 /* state_no_wifi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_no_wifi@3x.png"; sourceTree = "<group>"; };
 		396DAEBDF8F2DA8939FD3FD1 /* Pods_AKViewController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AKViewController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* AKViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,8 +51,8 @@
 		6003F59B195388D20070C39A /* AKViewController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AKViewController-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* AKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* AKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* AKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* AKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKViewController.m; sourceTree = "<group>"; };
+		6003F5A5195388D20070C39A /* AKViewController1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKViewController1.h; sourceTree = "<group>"; };
+		6003F5A6195388D20070C39A /* AKViewController1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKViewController1.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* AKViewController_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AKViewController_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -141,11 +145,13 @@
 		6003F593195388D20070C39A /* Example for AKViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0DF4A4B81D86B2D900C02881 /* state_no_wifi@2x.png */,
+				0DF4A4B91D86B2D900C02881 /* state_no_wifi@3x.png */,
 				6003F59C195388D20070C39A /* AKAppDelegate.h */,
 				6003F59D195388D20070C39A /* AKAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* AKViewController.h */,
-				6003F5A6195388D20070C39A /* AKViewController.m */,
+				6003F5A5195388D20070C39A /* AKViewController1.h */,
+				6003F5A6195388D20070C39A /* AKViewController1.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -276,6 +282,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DF4A4BA1D86B2D900C02881 /* state_no_wifi@2x.png in Resources */,
+				0DF4A4BB1D86B2D900C02881 /* state_no_wifi@3x.png in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -391,7 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* AKAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* AKViewController.m in Sources */,
+				6003F5A7195388D20070C39A /* AKViewController1.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
