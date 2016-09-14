@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AKViewControllerProtocol.h"
-#import "UIViewController+AKState.h"
 
 @interface AKViewController : UIViewController <AKViewControllerProtocol>
 

@@ -1,9 +1,13 @@
 PODS:
   - AKViewController (0.1.0):
+    - KVOController (= 1.1.0)
     - Masonry (= 1.0.1)
     - MBProgressHUD (= 1.0.0)
+    - Reachability (= 3.2)
+  - KVOController (1.1.0)
   - Masonry (1.0.1)
   - MBProgressHUD (1.0.0)
+  - Reachability (3.2)
 
 DEPENDENCIES:
   - AKViewController (from `../`)
@@ -13,9 +17,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AKViewController: 6ecff817fc06280fdfbb84cd81fa1ee7c261ba1f
+  AKViewController: 4664f5937679e284c0d0df5e674d2f46a26e7719
+  KVOController: 321b5fc59300fcaabd42c0f679baa7a27efbb2fd
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
 
 PODFILE CHECKSUM: 72889bae7e38a5373677ea461c521a9d816d8649
 

@@ -41,4 +41,6 @@ TODO: Add long description of the pod here.
   
   s.dependency 'MBProgressHUD', '1.0.0'
   s.dependency 'Masonry', '1.0.1'
+  s.dependency 'KVOController', '1.1.0'
+  s.dependency 'Reachability', '3.2'
 end

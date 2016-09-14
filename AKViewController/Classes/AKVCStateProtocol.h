@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AKViewControllerStateProtocol <NSObject>
+@protocol AKVCStateProtocol <NSObject>
 
 @required
 
