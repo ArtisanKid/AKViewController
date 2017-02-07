@@ -8,7 +8,7 @@
 
 #import "AKSubTitleCell.h"
 #import <Masonry/Masonry.h>
-#import "AKSVCDisplayConfig.h"
+#import "AKViewControllerDisplayConfig.h"
 
 @interface AKSubTitleCell ()
 
@@ -39,6 +39,7 @@
             UILabel *label = [[UILabel alloc] init];
             label.font = [UIFont systemFontOfSize:14.f];
             label.textColor = [UIColor lightGrayColor];
+            [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.contentView addSubview:label];
             label;
         });
@@ -46,12 +47,13 @@
         MASAttachKeys(self, _titleLabel, _subTitleLabel)
         
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(AKSVCBoundsGap());
+            make.leading.mas_equalTo(AKViewControllerBoundsGap());
             make.centerY.mas_equalTo(0.f);
         }];
         
         [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(_titleLabel.mas_trailing).offset(AKSVCInnerGap());
+            make.leading.mas_equalTo(_titleLabel.mas_trailing).offset(AKViewControllerInnerGap());
+            make.trailing.mas_lessThanOrEqualTo(-AKViewControllerBoundsGap());
             _subTitleLabel_centerY_constraint = make.centerY.mas_equalTo(0.f);
             _subTitleLabel_bottom_constraint = make.bottom.mas_equalTo(_titleLabel.mas_bottom);
         }];
@@ -62,39 +64,37 @@
 }
 
 #pragma mark- 协议方法
-+ (CGFloat)AKMinimumHeightOfCell {
-    return AKSVCBaseCellHeight();
++ (CGFloat)AKMinimumHeight {
+    return AKViewControllerBaseCellHeight();
 }
 
-- (void)AKDrawCell:(NSArray<NSString *> * _Nullable)object; {
+//@[title, subTitle]
+- (void)AKDrawContent:(NSArray<NSString *> * _Nullable)object {
     self.titleLabel.text = object.firstObject;
-    self.subTitleLabel.hidden = object.count < 2;
     if(object.count < 2) {
+        self.subTitleLabel.text = nil;
+        self.subTitleLabel.hidden = YES;
         return;
     }
+    self.subTitleLabel.hidden = NO;
     self.subTitleLabel.text = object.lastObject;
 }
 
 #pragma mark- 公开方法
-- (void)setAk_base:(AKSVCCellBaseline)base {
-    if (_ak_base == base) {
+- (void)setAk_bottomAlignment:(BOOL)bottomAlignment {
+    if(_ak_bottomAlignment == bottomAlignment) {
         return;
     }
     
-    _ak_base = base;
-    switch (_ak_base) {
-        case AKSVCCellBaselineCenter: {
-            [self.subTitleLabel_centerY_constraint activate];
-            [self.subTitleLabel_bottom_constraint deactivate];
-            break;
-        }  
-        case AKSVCCellBaselineBottom: {
-            [self.subTitleLabel_centerY_constraint deactivate];
-            [self.subTitleLabel_bottom_constraint activate];
-            break;
-        }
-        default: break;
+    _ak_bottomAlignment = bottomAlignment;
+    if(bottomAlignment) {
+        [self.subTitleLabel_centerY_constraint deactivate];
+        [self.subTitleLabel_bottom_constraint activate];
+    } else {
+        [self.subTitleLabel_centerY_constraint activate];
+        [self.subTitleLabel_bottom_constraint deactivate];
     }
+    
     [self layoutIfNeeded];
 }
 

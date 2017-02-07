@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AKTableViewCellProtocol.h"
 
-typedef NS_ENUM (NSUInteger, AKSVCCellBaseline) {
-    AKSVCCellBaselineCenter,
-    AKSVCCellBaselineBottom,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AKSubTitleCell : UITableViewCell<AKTableViewCellProtocol>
@@ -21,16 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) UILabel *titleLabel;
 @property (nonatomic, strong, readonly) UILabel *subTitleLabel;
 
-@property (nonatomic, assign) AKSVCCellBaseline ak_base;/**<控件对齐方式*/
-
-+ (CGFloat)AKMinimumHeightOfCell;
+@property (nonatomic, assign, getter=isAk_bottomAlignment) BOOL ak_bottomAlignment;/**<控件对齐方式*/
 
 /**
- *  AKDrawCell:
+ *  AKDrawContent:
  *
  *  @param object @[title, subTitle]
  */
-- (void)AKDrawCell:(NSArray<NSString *> * _Nullable)object;
+- (void)AKDrawContent:(NSArray<NSString *> * _Nullable)object;
 
 @end
 

@@ -7,15 +7,11 @@
 //
 
 #import "UIViewController+AKScrollState.h"
+#import "UIViewController+AKState.h"
+#import "AKScrollViewControllerProtocol.h"
+#import "AKScrollViewAdapterProtocol.h"
 #import "AKPullRefreshView.h"
 #import "AKPushLoadView.h"
-#import "UIViewController+AKState.h"
-#import "AKTableViewControllerProtocol.h"
-#import "AKCollectionViewControllerProtocol.h"
-#import "AKTableViewAdapterProtocol.h"
-#import "AKTableViewDelegateProtocol.h"
-#import "AKTVCAdapterProtocol.h"
-#import "AKScrollViewDataProtocol.h"
 
 @implementation UIViewController (AKScrollState)
 
@@ -36,13 +32,22 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
             return;
         }
         
-        AKPullRefreshView *view = [[AKPullRefreshView alloc] init];
+        if(![self conformsToProtocol:@protocol(AKScrollViewControllerProtocol)]) {
+            return;
+        }
+        
         id<AKScrollViewControllerProtocol> controller = self;
-        [controller.scrollView addSubview:view];
+        UIScrollView<AKScrollViewDataProtocol> *scrollView = controller.scrollView;
+        id<AKScrollViewAdapterProtocol> adapter = controller.adapter;
+        
+        AKPullRefreshView *view = [[AKPullRefreshView alloc] init];
+        [scrollView addSubview:view];
         
         __weak typeof(self) weak_self = self;
+        __weak typeof(controller) weak_controller = controller;
         view.triggerToRefreshBlock = ^() {
             __strong typeof(weak_self) strong_self = weak_self;
+            __strong typeof(weak_controller) strong_controller = weak_controller;
             
             if (strong_self.ak_pushLoadView.state == AKPushLoadStateLoading) {
                 strong_self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
@@ -56,37 +61,17 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
             strong_self.ak_progressHUD.labelText = nil;
             [strong_self.ak_progressHUD show:YES];
             
-            //如果实现了AKTableViewControllerAdapterProtocol
-            id<AKTableViewAdapterProtocol, AKTableViewDelegateProtocol> adapter = nil;
-            if([self conformsToProtocol:@protocol(AKTVCAdapterProtocol)]) {
-                id<AKTVCAdapterProtocol> controller = strong_self;
-                adapter = controller.adapter;
-            }
-            
-            //如果实现了AKTableViewControllerProtocol
-            id<AKScrollViewDataProtocol> scrollView = nil;
-            if([strong_self conformsToProtocol:@protocol(AKTableViewControllerProtocol)]) {
-                id<AKTableViewControllerProtocol> controller = strong_self;
-                scrollView = controller.tableView;
-            } else if([strong_self conformsToProtocol:@protocol(AKCollectionViewControllerProtocol)]) {
-                id<AKCollectionViewControllerProtocol> controller = strong_self;
-                scrollView = controller.collectionView;
-            }
-            
             //记录原始数据状态
-            NSArray *sections = adapter.sections;
+            NSArray *datas = adapter.datas;
             NSUInteger offset = adapter.offset;
             
             adapter.offset = adapter.offsetStart;
             
-            //实现了AKScrollViewControllerProtocol的controller
-            id<AKScrollViewControllerProtocol> controller = strong_self;
-            
-            [controller AKLoadDataWithComplete:^ (AKLoadDataResult (^_Nullable organizeBlock)()){
-                [self.ak_progressHUD hide:YES];
-                self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
+            [strong_controller AKLoadDataWithComplete:^ (AKLoadDataResult (^_Nullable organizeBlock)()){
+                [strong_self.ak_progressHUD hide:YES];
+                strong_self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
                 
-                [adapter removeAllSections];
+                adapter.datas = nil;
                 
                 AKLoadDataResult result = organizeBlock();
                 if(result == AKLoadDataResultNewData) {
@@ -94,13 +79,12 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
                     [scrollView reloadData];
                 } else if(result == AKLoadDataResultNoData) {
                     //刷新成功无数据
-                    self.ak_loadStateView.state = AKLoadStateDataEmpty;
+                    strong_self.ak_loadStateView.state = AKLoadStateDataEmpty;
                     [scrollView reloadData];
                 } else if(result == AKLoadDataResultFailed) {
                     //刷新失败
                     adapter.offset = offset;
-                    [adapter addSections:sections];
-                }
+                    adapter.datas = datas;                }
             }];
         };
         
@@ -147,59 +131,48 @@ static NSMapTable *ak_pushLoadViewMapTable = nil;
             return;
         }
         
-        AKPushLoadView *view = [[AKPushLoadView alloc] init];
+        if(![self conformsToProtocol:@protocol(AKScrollViewControllerProtocol)]) {
+            return;
+        }
+        
         id<AKScrollViewControllerProtocol> controller = self;
-        [controller.scrollView addSubview:view];
+        UIScrollView<AKScrollViewDataProtocol> *scrollView = controller.scrollView;
+        id<AKScrollViewAdapterProtocol> adapter = controller.adapter;
+        
+        AKPushLoadView *view = [[AKPushLoadView alloc] init];
+        [scrollView addSubview:view];
         
         __weak typeof(self) weak_self = self;
+        __weak typeof(controller) weak_controller = controller;
         view.triggerToLoadBlock = ^() {
             __strong typeof(weak_self) strong_self = weak_self;
+            __strong typeof(weak_controller) strong_controller = weak_controller;
             
-            if (self.ak_pullRefreshView.state == AKPullRefreshStateRefreshing) {
-                self.ak_pushLoadView.state = AKPushLoadStateFinishLoad;
+            if (strong_self.ak_pullRefreshView.state == AKPullRefreshStateRefreshing) {
+                strong_self.ak_pushLoadView.state = AKPushLoadStateFinishLoad;
                 return;
             }
             
-            self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
-            self.ak_pushLoadView.state = AKPushLoadStateLoading;
-            
-            //如果实现了AKTableViewControllerAdapterProtocol
-            id<AKTableViewAdapterProtocol, AKTableViewDelegateProtocol> adapter = nil;
-            if([self conformsToProtocol:@protocol(AKTVCAdapterProtocol)]) {
-                id<AKTVCAdapterProtocol> controller = self;
-                adapter = controller.adapter;
-            }
-            
-            //实现了AKScrollViewControllerProtocol的controller
-            id<AKScrollViewControllerProtocol> controller = self;
-            
-            //如果实现了AKTableViewControllerProtocol
-            id<AKScrollViewDataProtocol> scrollView = nil;
-            if([self conformsToProtocol:@protocol(AKTableViewControllerProtocol)]) {
-                id<AKTableViewControllerProtocol> controller = self;
-                scrollView = controller.tableView;
-            } else if([strong_self conformsToProtocol:@protocol(AKCollectionViewControllerProtocol)]) {
-                id<AKCollectionViewControllerProtocol> controller = strong_self;
-                scrollView = controller.collectionView;
-            }
+            strong_self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
+            strong_self.ak_pushLoadView.state = AKPushLoadStateLoading;
             
             //记录原始数据状态
             NSUInteger offset = adapter.offset;
             adapter.offset++;
             
-            [controller AKLoadDataWithComplete:^ (AKLoadDataResult (^_Nullable organizeBlock)()) {
+            [strong_controller AKLoadDataWithComplete:^ (AKLoadDataResult (^_Nullable organizeBlock)()) {
                 AKLoadDataResult result = organizeBlock();
                 if(result == AKLoadDataResultNewData) {
                     //加载成功有数据
-                    self.ak_pushLoadView.state = AKPushLoadStateFinishLoad;
+                    strong_self.ak_pushLoadView.state = AKPushLoadStateFinishLoad;
                     [scrollView reloadData];
                 } else if(result == AKLoadDataResultNoData) {
                     //加载成功无数据
-                    self.ak_pushLoadView.state = AKPushLoadStateNoMoreData;
+                    strong_self.ak_pushLoadView.state = AKPushLoadStateNoMoreData;
                 } else if(result == AKLoadDataResultFailed) {
                     //加载失败
                     adapter.offset = offset;
-                    self.ak_pushLoadView.state = AKPushLoadStateNoNetwork;
+                    strong_self.ak_pushLoadView.state = AKPushLoadStateNoNetwork;
                 }
             }];
         };

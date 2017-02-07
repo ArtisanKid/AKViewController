@@ -62,6 +62,7 @@
     return self.collectionView;
 }
 
+#pragma mark - Interface
 - (void)setLayout:(UICollectionViewLayout *)layout {
     NSParameterAssert(layout);
     
@@ -75,7 +76,7 @@
     }
     
     _adapter = adapter;
-    _adapter.collectionView= self.collectionView;
+    _adapter.scrollView = self.collectionView;
 }
 
 @end

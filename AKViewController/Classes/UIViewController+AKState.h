@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AKVCStateProtocol.h"
+#import "AKViewControllerStateProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIViewController (AKState) <AKVCStateProtocol>
+@interface UIViewController (AKState) <AKViewControllerStateProtocol>
 
 @property (nonatomic, assign) BOOL ak_startProgressHUD;
 @property (nonatomic, strong, readonly) MBProgressHUD *ak_progressHUD;

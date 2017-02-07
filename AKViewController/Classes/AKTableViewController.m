@@ -134,7 +134,7 @@
     }
     
     _adapter = adapter;
-    _adapter.tableView = self.tableView;
+    _adapter.scrollView = self.tableView;
 }
 
 #pragma mark- 公开方法

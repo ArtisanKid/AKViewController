@@ -8,7 +8,7 @@
 
 #import "AKArrowCell.h"
 #import <Masonry/Masonry.h>
-#import "AKSVCDisplayConfig.h"
+#import "AKViewControllerDisplayConfig.h"
 
 @interface AKArrowCell ()
 
@@ -19,7 +19,6 @@
 
 @implementation AKArrowCell
 
-#pragma mark - 生命周期
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -29,7 +28,7 @@
         _titleLabel = ({
             UILabel *label = [[UILabel alloc] init];
             label.font = [UIFont systemFontOfSize:16.f];
-            label.textColor = [UIColor darkGrayColor];
+            label.textColor = UIColor.darkGrayColor;
             [label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.contentView addSubview:label];
@@ -39,20 +38,20 @@
         _subTitleLabel = ({
             UILabel *label = [[UILabel alloc] init];
             label.font = [UIFont systemFontOfSize:14.f];
-            label.textColor = [UIColor lightGrayColor];
-            label.textAlignment = NSTextAlignmentRight;
+            label.textColor = UIColor.lightGrayColor;
+            [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.contentView addSubview:label];
             label;
         });
         
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(AKSVCBoundsGap());
+            make.leading.mas_equalTo(AKViewControllerBoundsGap());
             make.centerY.mas_equalTo(0.f);
         }];
         
         [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_greaterThanOrEqualTo(_titleLabel.mas_trailing);
-            make.trailing.mas_equalTo(-AKSVCBoundsGap());
+            make.leading.mas_greaterThanOrEqualTo(_titleLabel.mas_trailing).offset(AKViewControllerInnerGap());
+            make.trailing.mas_equalTo(-AKViewControllerBoundsGap());
             make.centerY.mas_equalTo(0.f);
         }];
     }
@@ -60,16 +59,19 @@
 }
 
 #pragma mark - 重载方法
-+ (CGFloat)AKHeightOfCell {
-    return AKSVCBaseCellHeight();
++ (CGFloat)AKHeightOfContent:(id)object {
+    return AKViewControllerBaseCellHeight();
 }
 
-- (void)AKDrawCell:(NSArray<NSString *> *)object {
+//@[title, subTitle]
+- (void)AKDrawContent:(NSArray<NSString *> *)object {
     self.titleLabel.text = object.firstObject;
-    self.subTitleLabel.hidden = object.count < 2;
     if(object.count < 2) {
+        self.subTitleLabel.text = nil;
+        self.subTitleLabel.hidden = YES;
         return;
     }
+    self.subTitleLabel.hidden = NO;
     self.subTitleLabel.text = object.lastObject;
 }
 

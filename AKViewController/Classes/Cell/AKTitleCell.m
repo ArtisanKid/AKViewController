@@ -9,7 +9,7 @@
 #import "AKTitleCell.h"
 #import <Masonry/Masonry.h>
 #import "AKViewControllerMacro.h"
-#import "AKSVCDisplayConfig.h"
+#import "AKViewControllerDisplayConfig.h"
 
 @implementation AKTitleCell
 
@@ -40,26 +40,27 @@
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
     
-    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - AKSVCBoundsGap() * 2;
+    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - AKViewControllerBoundsGap() * 2;
 }
 
 #pragma mark- 私有方法
 - (void)originTitleLabelConstraint {
-    MASAttachKeys(self, _titleLabel)
+    MASAttachKeys(self, self.titleLabel)
     
-    [_titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(0.f);
-        make.leading.mas_equalTo(AKSVCBoundsGap());
-        make.trailing.mas_equalTo(-AKSVCBoundsGap());
+        make.leading.mas_equalTo(AKViewControllerBoundsGap());
+        make.trailing.mas_equalTo(-AKViewControllerBoundsGap());
     }];
 }
 
 #pragma mark- 协议方法
-+ (CGFloat)AKMinimumHeightOfCell {
-    return AKSVCBaseCellHeight();
++ (CGFloat)AKMinimumHeight {
+    return AKViewControllerBaseCellHeight();
 }
 
-- (void)AKDrawCell:(id)object {
+//NSString 或者 NSAttributedString，或者相应description方法的对象
+- (void)AKDrawContent:(id)object {
     if([object isKindOfClass:[NSString class]]) {
         self.titleLabel.text = object;
     } else if([object isKindOfClass:[NSAttributedString class]]) {

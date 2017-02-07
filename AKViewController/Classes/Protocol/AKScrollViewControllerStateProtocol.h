@@ -1,8 +1,8 @@
 //
-//  AKScrollViewControllerStatusProtocol.h
+//  AKScrollViewControllerStateProtocol.h
 //  Pods
 //
-//  Created by 李翔宇 on 16/4/1.
+//  Created by 李翔宇 on 2017/2/7.
 //
 //
 
@@ -12,9 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AKSVCStateProtocol <NSObject>
-
-@required
+@protocol AKScrollViewControllerStateProtocol <NSObject>
 
 @property (nonatomic, assign) BOOL ak_startPullRefreshView;
 @property (nonatomic, strong, readonly) AKPullRefreshView *ak_pullRefreshView;

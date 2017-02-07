@@ -7,17 +7,19 @@
 //
 
 #import "AKViewController.h"
-#import "AKCollectionViewControllerProtocol.h"
-#import "AKCVCAdapterProtocol.h"
+#import "AKScrollViewControllerProtocol.h"
+#import "AKCollectionViewAdapterProtocol.h"
+#import "AKCollectionViewDelegateProtocol.h"
 
-@interface AKCollectionViewController : AKViewController<AKCollectionViewControllerProtocol, AKCVCAdapterProtocol>
+@interface AKCollectionViewController : AKViewController<AKScrollViewControllerProtocol>
 
+#pragma mark - AKScrollViewControllerProtocol
 @property (nonatomic, strong, readonly) UIScrollView<AKScrollViewDataProtocol> *scrollView;
+@property (nonatomic, strong) id<AKCollectionViewAdapterProtocol, AKCollectionViewDelegateProtocol> adapter;
 
+#pragma mark - Interface
 - (instancetype)init;
 @property (nonatomic, strong) UICollectionViewLayout *layout;
 @property (nonatomic, strong, readonly) UICollectionView *collectionView;
-
-@property (nonatomic, strong) id<AKCollectionViewAdapterProtocol, AKCollectionViewDelegateProtocol> adapter;
 
 @end

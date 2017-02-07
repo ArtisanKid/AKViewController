@@ -17,11 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL ak_autoNumberOfLine;
 
 /**
- *  绘制cell
+ *  AKDrawContent:
  *
  *  @param object NSString 或者 NSAttributedString，或者相应description方法的对象
  */
-- (void)AKDrawCell:(id _Nullable)object;
+- (void)AKDrawContent:(id _Nullable)object;
 
 @end
 

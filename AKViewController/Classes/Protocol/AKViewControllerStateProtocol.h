@@ -1,5 +1,5 @@
 //
-//  AKViewControllerDataStatusProtocol.h
+//  AKViewControllerStateProtocol.h
 //  Pods
 //
 //  Created by 李翔宇 on 16/4/1.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AKVCStateProtocol <NSObject>
+@protocol AKViewControllerStateProtocol <NSObject>
 
 @required
 

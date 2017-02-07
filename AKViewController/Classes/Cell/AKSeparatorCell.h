@@ -11,6 +11,4 @@
 
 @interface AKSeparatorCell : UITableViewCell<AKTableViewCellProtocol>
 
-+ (CGFloat)AKHeightOfCell;
-
 @end

@@ -8,6 +8,7 @@
 
 #import "AKImageCell.h"
 #import <Masonry/Masonry.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface AKImageCell ()
 
@@ -38,11 +39,14 @@
 }
 
 #pragma mark - 重载方法
-- (void)AKDrawCell:(id)object {
+//UIImage/NSString/NSURL
+- (void)AKDrawContent:(id)object {
     if([object isKindOfClass:[UIImage class]]) {
         self.wholeImageView.image = object;
     } else if([object isKindOfClass:[NSString class]]) {
         self.wholeImageView.image = [UIImage imageNamed:object];
+    } else if([object isKindOfClass:[NSURL class]]) {
+        [self.wholeImageView sd_setImageWithURL:object];
     }
 }
 

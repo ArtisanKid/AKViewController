@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AKSVCStateProtocol.h"
+#import "AKScrollViewControllerStateProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class AKPullRefreshView;
 @class AKPushLoadView;
 
-@interface UIViewController (AKScrollState)<AKSVCStateProtocol>
+@interface UIViewController (AKScrollState)<AKScrollViewControllerStateProtocol>
 
 @property (nonatomic, assign) BOOL ak_startPullRefreshView;
 @property (nonatomic, strong) AKPullRefreshView *ak_pullRefreshView;

@@ -8,19 +8,23 @@
 
 #import "AKViewController.h"
 #import <Masonry/Masonry.h>
-#import "AKTableViewControllerProtocol.h"
-#import "AKTVCAdapterProtocol.h"
+#import "AKScrollViewControllerProtocol.h"
+#import "AKTableViewAdapterProtocol.h"
+#import "AKTableViewDelegateProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AKTableViewController : AKViewController<AKTableViewControllerProtocol, AKTVCAdapterProtocol>
+@interface AKTableViewController : AKViewController<AKScrollViewControllerProtocol>
+
+#pragma mark - AKScrollViewControllerProtocol
 
 @property (nonatomic, strong, readonly) UIScrollView<AKScrollViewDataProtocol> *scrollView;
+@property (nonatomic, strong) id<AKTableViewAdapterProtocol, AKTableViewDelegateProtocol> adapter;
+
+#pragma mark - Interface
 
 - (instancetype)initWithStyle:(UITableViewStyle)style;
 @property (nonatomic, strong, readonly) UITableView *tableView;
-
-@property (nonatomic, strong) id<AKTableViewAdapterProtocol, AKTableViewDelegateProtocol> adapter;
 
 //////////////////////////////////////////////////////////////////
 

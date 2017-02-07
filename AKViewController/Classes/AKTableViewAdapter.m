@@ -15,6 +15,80 @@ CGFloat AKTableViewComponentHeightAuto = -1.f;
 
 @interface AKTableViewAdapter()
 
+@property (nonatomic, assign) NSUInteger pageSize;
+@property (nonatomic, assign) NSUInteger offsetStart;
+@property (nonatomic, assign) NSUInteger offset;
+
+@property (nonatomic, weak) UITableView *scrollView;
+@property (nonatomic, assign, getter=isAutoReloadData) BOOL autoReloadData;
+@property (nonatomic, strong) NSArray<id> *datas;
+
+#pragma mark- AKTableViewDelegateProtocol
+
+@property (nonatomic, strong) void(^willDisplayCell)(UITableView *tableView, UITableViewCell *cell, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^willDisplayHeaderView)(UITableView *tableView, UIView *view, NSInteger section);
+@property (nonatomic, strong) void(^willDisplayFooterView)(UITableView *tableView, UIView *view, NSInteger section);
+@property (nonatomic, strong) void(^didEndDisplayingCell)(UITableView *tableView, UITableViewCell *cell, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didEndDisplayingHeaderView)(UITableView *tableView, UIView *view, NSInteger section);
+@property (nonatomic, strong) void(^didEndDisplayingFooterView)(UITableView *tableView, UIView *view, NSInteger section);
+
+@property (nonatomic, strong) CGFloat(^heightForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) CGFloat(^heightForHeader)(UITableView *tableView, NSInteger section);
+@property (nonatomic, strong) CGFloat(^heightForFooter)(UITableView *tableView, NSInteger section);
+
+@property (nonatomic, strong) CGFloat(^estimatedHeightForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) CGFloat(^estimatedHeightForHeader)(UITableView *tableView, NSInteger section);
+@property (nonatomic, strong) CGFloat(^estimatedHeightForFooter)(UITableView *tableView, NSInteger section);
+
+@property (nonatomic, strong) UIView *(^viewForHeader)(UITableView *tableView, NSInteger section);
+@property (nonatomic, strong) UIView *(^viewForFooter)(UITableView *tableView, NSInteger section);
+
+@property (nonatomic, strong) void (^accessoryButtonTappedForRow)(UITableView *tableView, NSIndexPath *indexPath);
+
+@property (nonatomic, strong) BOOL(^shouldHighlightRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didHighlightRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didUnhighlightRow)(UITableView *tableView, NSIndexPath *indexPath);
+
+@property (nonatomic, strong) NSIndexPath *(^willSelectRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) NSIndexPath *(^willDeselectRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didSelectRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didDeselectRow)(UITableView *tableView, NSIndexPath *indexPath);
+
+
+@property (nonatomic, strong) UITableViewCellEditingStyle(^editingStyleForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) NSString *(^titleForDeleteConfirmationButtonForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) NSArray<UITableViewRowAction *> *(^editActionsForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) BOOL(^shouldIndentWhileEditingRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^willBeginEditingRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) void(^didEndEditingRow)(UITableView *tableView, NSIndexPath *indexPath);
+
+@property (nonatomic, strong) NSIndexPath *(^moveRow)(UITableView *tableView, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath);
+
+@property (nonatomic, strong) NSInteger(^indentationLevelForRow)(UITableView *tableView, NSIndexPath *indexPath);
+
+@property (nonatomic, strong) BOOL(^shouldShowMenuForRow)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, strong) BOOL(^canPerformActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
+@property (nonatomic, strong) BOOL(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
+
+@property (nonatomic, strong) BOOL(^canFocusRow)(UITableView *tableView, NSIndexPath *indexPath) NS_AVAILABLE_IOS(9_0);
+@property (nonatomic, strong) BOOL(^shouldUpdateFocus)(UITableView *tableView, UITableViewFocusUpdateContext *context) NS_AVAILABLE_IOS(9_0);
+@property (nonatomic, strong) BOOL(^didUpdateFocus)(UITableView *tableView, UITableViewFocusUpdateContext *context, UIFocusAnimationCoordinator *coordinator) NS_AVAILABLE_IOS(9_0);
+@property (nonatomic, strong) NSIndexPath *(^indexPathForPreferredFocusedView)(UITableView *tableView) NS_AVAILABLE_IOS(9_0);
+
+#pragma mark- AKScrollViewDelegateProtocol
+
+@property (nonatomic, strong) void(^didScroll)(UIScrollView *scrollView);
+@property (nonatomic, strong) void(^willBeginDragging)(UIScrollView *scrollView);
+@property (nonatomic, strong) void(^willEndDragging)(UIScrollView *scrollView, CGPoint velocity, CGPoint *targetContentOffset);
+@property (nonatomic, strong) void(^didEndDragging)(UIScrollView *scrollView, BOOL decelerate);
+@property (nonatomic, strong) void(^willBeginDecelerating)(UIScrollView *scrollView);
+@property (nonatomic, strong) void(^didEndDecelerating)(UIScrollView *scrollView);
+@property (nonatomic, strong) void(^didEndScrollingAnimation)(UIScrollView *scrollView);
+@property (nonatomic, strong) BOOL(^shouldScrollToTop)(UIScrollView *scrollView);
+@property (nonatomic, strong) void(^didScrollToTop)(UIScrollView *scrollView);
+
+#pragma mark- 内部参数
+@property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<id<AKTableViewSectionProtocol>> *sectionsM;
 
 @end
@@ -22,6 +96,36 @@ CGFloat AKTableViewComponentHeightAuto = -1.f;
 @implementation AKTableViewAdapter
 
 #pragma mark- 私有方法
+- (void)setScrollView:(UITableView *)scrollView {
+    if([_scrollView isEqual:scrollView]) {
+        return;
+    }
+    
+    _scrollView = scrollView;
+    if([_scrollView isKindOfClass:[UITableView class]]) {
+        self.tableView = _scrollView;
+    }
+}
+
+- (void)setTableView:(UITableView *)tableView {
+    if(_tableView == tableView) {
+        return;
+    }
+    
+    _tableView = tableView;
+    [self.sections enumerateObjectsUsingBlock:^(id<AKTableViewSectionProtocol> _Nonnull section, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self registerSectionView:section.header];
+        [self registerSectionView:section.footer];
+        [section.rows enumerateObjectsUsingBlock:^(id<AKTableViewRowProtocol> _Nonnull row, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self registerRow:row];
+        }];
+    }];
+    
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [_tableView reloadData];
+}
+
 - (void)registerRow:(id<AKTableViewRowProtocol>)row {
     if(!row) {
         return;
@@ -63,25 +167,6 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
 
 - (NSArray<id<AKTableViewSectionProtocol>> *)sections {
     return [self.sectionsM copy];
-}
-
-- (void)setTableView:(UITableView *)tableView {
-    if(_tableView == tableView) {
-        return;
-    }
-    
-    _tableView = tableView;
-    [self.sections enumerateObjectsUsingBlock:^(id<AKTableViewSectionProtocol> _Nonnull section, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self registerSectionView:section.header];
-        [self registerSectionView:section.footer];
-        [section.rows enumerateObjectsUsingBlock:^(id<AKTableViewRowProtocol> _Nonnull row, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self registerRow:row];
-        }];
-    }];
-    
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [_tableView reloadData];
 }
 
 #pragma mark- AKTableViewAdapterProtocol
@@ -214,10 +299,8 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
     
     id<AKTableViewRowProtocol> row = self.sections[indexPath.section].rows[indexPath.row];
     UITableViewCell<AKTableViewCellProtocol> *cell = [tableView dequeueReusableCellWithIdentifier:row.identifier];
-    if([cell respondsToSelector:@selector(AKDrawCell:)]) {
-        [cell AKDrawCell:row.objToDraw];
-    } else if([cell respondsToSelector:@selector(AKDrawView:)]) {
-        [cell AKDrawView:row.objToDraw];
+    if([cell respondsToSelector:@selector(AKDrawContent:)]) {
+        [cell AKDrawContent:row.objToDraw];
     }
     return cell;
 }
@@ -311,24 +394,23 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         return row.height;
     }
     
-    if(class_getClassMethod(row.cell, @selector(AKHeightOfCellWithObject:))) {
-        row.height = [row.cell AKHeightOfCellWithObject:row.objToDraw];
-        if(row.height) {
-            return row.height;
-        }
-    }
+    /*
+     计算cell高度的时候，不再考虑父类协议
+     首先尝试AKHeightOfContent:获取精确高度
+     如果无法获取精确高度，那么就Autolayout自动计算高度，且和AKMinimumHeight(最小高度)比较
+     */
     
-    if(class_getClassMethod(row.cell, @selector(AKHeightOfCell))) {
-        row.height = [row.cell AKHeightOfCell];
-        if(row.height) {    
+    if(class_getClassMethod(row.cell, @selector(AKHeightOfContent:))) {
+        row.height = [row.cell AKHeightOfContent:row.objToDraw];
+        if(row.height) {
             return row.height;
         }
     }
     
     UITableViewCell<AKTableViewCellProtocol> *cell = [tableView dequeueReusableCellWithIdentifier:row.identifier];
     if(cell) {
-        if([cell respondsToSelector:@selector(AKDrawCell:)]) {
-            [cell AKDrawCell:row.objToDraw];
+        if([cell respondsToSelector:@selector(AKDrawContent:)]) {
+            [cell AKDrawContent:row.objToDraw];
         }
         
         [cell layoutIfNeeded];
@@ -339,8 +421,8 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
             }
             
             //有高度的情况下判断是否比最小高度大，否则取最小高度
-            if(class_getClassMethod(row.cell, @selector(AKMinimumHeightOfCell))) {
-                CGFloat minHeight = [row.cell AKMinimumHeightOfCell];
+            if(class_getClassMethod(row.cell, @selector(AKMinimumHeight))) {
+                CGFloat minHeight = [row.cell AKMinimumHeight];
                 if(minHeight) {
                     if(self.tableView.separatorStyle == UITableViewCellSeparatorStyleSingleLine) {
                         minHeight += 1.f;
@@ -351,7 +433,6 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
                     }
                 }
             }
-            
             row.height = height;
             return row.height;
         }
@@ -369,15 +450,15 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         return view.height;
     }
     
-    if(class_getClassMethod(view.view, @selector(AKSizeOfViewWithObject:))) {
-        view.height = [view.view AKSizeOfViewWithObject:view.objToDraw].height;
+    if(class_getClassMethod(view.view, @selector(AKSizeOfContent:))) {
+        view.height = [view.view  AKSizeOfContent:view.objToDraw].height;
         if(view.height) {
             return view.height;
         }
     }
     
-    if(class_getClassMethod(view.view, @selector(AKSizeOfView))) {
-        view.height = [view.view AKSizeOfView].height;
+    if(class_getClassMethod(view.view, @selector(AKMinimumSize))) {
+        view.height = [view.view AKMinimumSize].height;
         if(view.height) {
             return view.height;
         }
@@ -395,15 +476,15 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         return view.height;
     }
     
-    if(class_getClassMethod(view.view, @selector(AKSizeOfViewWithObject:))) {
-        view.height = [view.view AKSizeOfViewWithObject:view.objToDraw].height;
+    if(class_getClassMethod(view.view, @selector(AKSizeOfContent:))) {
+        view.height = [view.view AKSizeOfContent:view.objToDraw].height;
         if(view.height) {
             return view.height;
         }
     }
     
-    if(class_getClassMethod(view.view, @selector(AKSizeOfView))) {
-        view.height = [view.view AKSizeOfView].height;
+    if(class_getClassMethod(view.view, @selector(AKMinimumSize))) {
+        view.height = [view.view AKMinimumSize].height;
         if(view.height) {
             return view.height;
         }
@@ -448,7 +529,7 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
     }
     
     if([view respondsToSelector:@selector(AKDrawView:)]) {
-        [view AKDrawView:_section.header.objToDraw];
+        [view AKDrawContent:_section.header.objToDraw];
     }
     return view;
 }
@@ -465,7 +546,7 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
     }
     
     if([view respondsToSelector:@selector(AKDrawView:)]) {
-        [view AKDrawView:_section.footer.objToDraw];
+        [view AKDrawContent:_section.footer.objToDraw];
     }
     return view;
 }

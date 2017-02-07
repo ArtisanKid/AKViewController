@@ -7,7 +7,7 @@
 //
 
 #import "AKSeparatorCell.h"
-#import "AKSVCDisplayConfig.h"
+#import "AKViewControllerDisplayConfig.h"
 
 @implementation AKSeparatorCell
 
@@ -21,8 +21,8 @@
 }
 
 #pragma mark- 协议方法
-+ (CGFloat)AKHeightOfCell {
-    return AKSVCBoundsGap();
++ (CGFloat)AKHeightOfContent:(id)object {
+    return AKViewControllerBoundsGap();
 }
 
 @end

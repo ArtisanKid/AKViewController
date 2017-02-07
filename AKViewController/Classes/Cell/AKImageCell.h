@@ -13,14 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AKImageCell : UITableViewCell<AKTableViewCellProtocol>
 
+//占满cell的UIImageView
 @property (nonatomic, strong, readonly) UIImageView *wholeImageView;
 
 /**
- *  AKDrawCell
+ *  AKDrawContent:
  *
- *  @param object UIImage/NSString
+ *  @param object UIImage/NSString/NSURL
  */
-- (void)AKDrawCell:(id _Nullable)object;
+- (void)AKDrawContent:(id _Nullable)object;
 
 @end
 

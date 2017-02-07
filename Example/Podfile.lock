@@ -1,28 +1,33 @@
 PODS:
   - AKViewController (0.1.0):
-    - KVOController (= 1.1.0)
-    - Masonry (= 1.0.1)
-    - MBProgressHUD (= 1.0.0)
-    - Reachability (= 3.2)
-  - KVOController (1.1.0)
-  - Masonry (1.0.1)
+    - KVOController
+    - Masonry
+    - MBProgressHUD
+    - Reachability
+    - SDWebImage
+  - KVOController (1.2.0)
+  - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - Reachability (3.2)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
 
 DEPENDENCIES:
   - AKViewController (from `../`)
 
 EXTERNAL SOURCES:
   AKViewController:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  AKViewController: 4664f5937679e284c0d0df5e674d2f46a26e7719
-  KVOController: 321b5fc59300fcaabd42c0f679baa7a27efbb2fd
-  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  AKViewController: aeeafd35158cdbe88070eb380b55828c7de0b5a9
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
 PODFILE CHECKSUM: 72889bae7e38a5373677ea461c521a9d816d8649
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1
