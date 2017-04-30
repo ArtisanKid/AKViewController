@@ -12,17 +12,17 @@
 #import <KVOController/KVOController.h>
 #import <Reachability/Reachability.h>
 
-#define AKPullRefreshViewRefreshTriggerHeight 68.f
-#define AKPullRefreshViewRefreshHeight 60.f
-#define AKPullRefreshViewTitleBottomToBottom 24.f
+#define AKPullRefreshViewRefreshTriggerHeight 68.
+#define AKPullRefreshViewRefreshHeight 60.
+#define AKPullRefreshViewTitleBottomToBottom 24.
 
 @interface AKPullRefreshView ()
 
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *backgroundColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *backgroundColorDicM;
 @property (nonatomic, strong) NSString *iconBackgroundImage;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *iconImageDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIImage *> *iconImageDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *titleDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *titleColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColorDicM;
 
 @property (nonatomic, strong, readwrite) UILabel *titleLabel;
 @property (nonatomic, strong, readwrite) UIImageView *iconBackgroundImageView;
@@ -61,7 +61,7 @@
             //icon大小为27*22
             
             _iconBackgroundImageView = [[UIImageView alloc] init];
-            _iconBackgroundImageView.image = [UIImage imageNamed:AKPullRefreshView_IconBackgroundImage];
+            _iconBackgroundImageView.image = AKPullRefreshView_IconBackgroundImage;
             [view addSubview:_iconBackgroundImageView];
             
             _iconImageView = [[UIImageView alloc] init];
@@ -85,18 +85,18 @@
             MASAttachKeys(self, _iconBackgroundImageView, _iconImageView, _titleLabel, _loadActivityIndicatorView);
             
             [_iconBackgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(27.f).priorityHigh();
-                make.height.mas_equalTo(22.f).priorityHigh();
-                make.top.mas_equalTo(0.f);
-                make.bottom.mas_equalTo(0.f);
-                make.leading.mas_equalTo(0.f);
+                make.width.mas_equalTo(27.).priorityHigh();
+                make.height.mas_equalTo(22.).priorityHigh();
+                make.top.mas_equalTo(0.);
+                make.bottom.mas_equalTo(0.);
+                make.leading.mas_equalTo(0.);
             }];
             
             [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(27.f);
-                make.height.mas_equalTo(0.f);
+                make.width.mas_equalTo(27.);
+                make.height.mas_equalTo(0.);
                 make.centerX.mas_equalTo(_iconBackgroundImageView);
-                make.bottom.mas_equalTo(0.f);
+                make.bottom.mas_equalTo(0.);
             }];
             
             [_loadActivityIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,9 +104,9 @@
             }];
             
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.mas_equalTo(0.f);
-                make.leading.mas_equalTo(_iconBackgroundImageView.mas_trailing).offset(10.f);
-                make.trailing.mas_equalTo(0.f);
+                make.centerY.mas_equalTo(0.);
+                make.leading.mas_equalTo(_iconBackgroundImageView.mas_trailing).offset(10.);
+                make.trailing.mas_equalTo(0.);
             }];
             
             view;
@@ -117,27 +117,27 @@
         MASAttachKeys(self, containerView);
         
         [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(0.f);
-            make.bottom.mas_equalTo(-18.f);
+            make.centerX.mas_equalTo(0.);
+            make.bottom.mas_equalTo(-18.);
         }];
         
         /////////////////////////////////////
         
         //图标填充速率。从文字显示出来开始填充icon
-        _iconFullRate = 22.f / (AKPullRefreshViewRefreshTriggerHeight - AKPullRefreshViewTitleBottomToBottom);
+        _iconFullRate = 22. / (AKPullRefreshViewRefreshTriggerHeight - AKPullRefreshViewTitleBottomToBottom);
         
         _reachability = [Reachability reachabilityWithHostName:@"http://www.apple.com"];
         __weak typeof(self) weak_self = self;
         [_reachability setReachableBlock:^(Reachability * reachability) {
             __strong typeof(weak_self) strong_self = weak_self;
             if(strong_self.state == AKPullRefreshStateNoNetwork) {
-                strong_self.state == AKPullRefreshStateNormal;
+                strong_self.state = AKPullRefreshStateNormal;
             }
         }];
         [_reachability setUnreachableBlock:^(Reachability * reachability) {
             __strong typeof(weak_self) strong_self = weak_self;
             if(strong_self.state == AKPullRefreshStateNormal) {
-                strong_self.state == AKPullRefreshStateNoNetwork;
+                strong_self.state = AKPullRefreshStateNoNetwork;
             }
         }];
         [_reachability startNotifier];
@@ -235,7 +235,7 @@
         }
         
         //contentOffset负数值表示下拉
-        //contentOffset.y的初始值为baseContentInsetTop的负值，比如-64.f
+        //contentOffset.y的初始值为baseContentInsetTop的负值，比如-64.
         CGPoint contentOffset;
         [change[@"new"] getValue:&contentOffset];
         
@@ -252,7 +252,7 @@
             CGRect frame = self.iconImageView.frame;
             frame.origin.y = (frame.origin.y + frame.size.height) - (offsetChange - AKPullRefreshViewTitleBottomToBottom) * self.iconFullRate;
             frame.size.height = (offsetChange - AKPullRefreshViewTitleBottomToBottom) * _iconFullRate;
-            if(frame.size.height <= 22.f) {
+            if(frame.size.height <= 22.) {
                 self.iconImageView.frame = frame;
             }
         }
@@ -292,7 +292,7 @@
         
         //不管当前什么状态，只要contentSize有变化，那么总是让控件的y处在一个刚刚好的位置
         CGFloat screenHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
-        CGRect frame = CGRectMake(0.f, -screenHeight, CGRectGetWidth([UIScreen mainScreen].bounds), screenHeight);
+        CGRect frame = CGRectMake(0., -screenHeight, CGRectGetWidth([UIScreen mainScreen].bounds), screenHeight);
         self.frame = frame;
     }
 }
@@ -312,10 +312,10 @@
         self.backgroundColorDicM[@(AKPullRefreshStatePause)] = color;
     }
 }
-- (void)setIconImage:(NSString *)imageName state:(AKPullRefreshState)state {
-    self.iconImageDicM[@(state)] = imageName;
+- (void)setIconImage:(UIImage *)image state:(AKPullRefreshState)state {
+    self.iconImageDicM[@(state)] = image;
     if(self.state == state) {
-        self.iconImageView.image = [UIImage imageNamed:imageName];
+        self.iconImageView.image = image;
     }
 }
 
@@ -353,9 +353,9 @@
     }
 }
 
-UIColor *AKPullRefreshView_IconBackgroundImage = nil;
-+ (void)setIconBackgroundImage:(NSString *)imageName {
-    AKPullRefreshView_IconBackgroundImage = imageName;
+UIImage *AKPullRefreshView_IconBackgroundImage = nil;
++ (void)setIconBackgroundImage:(UIImage *)image {
+    AKPullRefreshView_IconBackgroundImage = image;
 }
 
 + (void)setImage:(NSString *)imageName state:(AKPullRefreshState)state {
@@ -388,7 +388,7 @@ UIColor *AKPullRefreshView_IconBackgroundImage = nil;
     }
 }
 
-UIColor *AKPullRefreshView_TitleFont = nil;
+UIFont *AKPullRefreshView_TitleFont = nil;
 + (void)setTitleFont:(UIFont *)font {
     AKPullRefreshView_TitleFont = font;
 }
@@ -402,7 +402,7 @@ UIColor *AKPullRefreshView_TitleFont = nil;
     _state = state;
     
     //处理内容变更
-    self.iconImageView.image = [UIImage imageNamed:self.iconImageDicM[@(_state)]];
+    self.iconImageView.image = self.iconImageDicM[@(_state)];
     self.titleLabel.textColor = self.titleColorDicM[@(_state)];
     self.titleLabel.text = self.titleDicM[@(_state)];
     

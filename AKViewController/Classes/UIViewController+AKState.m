@@ -100,12 +100,12 @@ static NSMapTable *ak_loadStateViewMapTable = nil;
         [self.view addSubview:view];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(0.f);
+            make.edges.mas_equalTo(0.);
         }];
         
         __weak typeof(self) weak_self = self;
         [view setTouchUpInsideBlock:^{
-            __strong typeof(self) strong_self = self;
+            __strong typeof(weak_self) strong_self = weak_self;
             if (strong_self.ak_loadStateView.state == AKLoadStateNetworkError) {
                 if(![strong_self conformsToProtocol:@protocol(AKViewControllerProtocol)]) {
                     return;
@@ -116,7 +116,7 @@ static NSMapTable *ak_loadStateViewMapTable = nil;
                 }
                 
                 strong_self.ak_loadStateView.state = AKLoadStateDataLoading;
-                id<AKViewControllerProtocol> controller = strong_self;
+                id<AKViewControllerProtocol> controller = (id<AKViewControllerProtocol>)strong_self;
                 [controller AKLoadData];
             }
         }];

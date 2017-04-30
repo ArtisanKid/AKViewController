@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /*
- Protocol扩展用于将大量Protocol实现隐藏到Extension中
+ Protocol扩展用于将大量Protocol实现隐藏到Category中
  */
 
 @interface AKTableViewAdapter (Protocol)<AKTableViewAdapterProtocol, AKScrollViewDelegateProtocol, AKTableViewDelegateProtocol>
@@ -29,9 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSUInteger offsetStart;
 @property (nonatomic, assign) NSUInteger offset;
 
-@property (nullable, nonatomic, weak) UITableView *scrollView;
+@property (nullable, nonatomic, weak) UITableView<AKScrollViewDataProtocol> *scrollView;
 @property (nonatomic, assign, getter=isAutoReloadData) BOOL autoReloadData;
-@property (nonatomic, strong) NSArray<id/*不同子类指定不同类型*/> *datas;
+@property (nonatomic, strong, nullable) NSArray<id/*不同子类指定不同类型*/> *datas;
 
 @property (nonatomic, strong, readonly) NSArray<id<AKTableViewSectionProtocol>> *sections;
 
@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) BOOL(^canPerformActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
 
 //- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-@property (nonatomic, strong) BOOL(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
+@property (nonatomic, strong) void(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
 
 
 

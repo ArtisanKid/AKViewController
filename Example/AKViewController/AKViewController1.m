@@ -24,16 +24,16 @@
     [AKLoadStateView setImage:@"state_no_wifi" state:AKLoadStateNetworkError];
     [AKLoadStateView setTitle:@"网络错误" state:AKLoadStateNetworkError];
     [AKLoadStateView setTitleColor:[UIColor grayColor] state:AKLoadStateNetworkError];
-    [AKLoadStateView setTitleFont:[UIFont systemFontOfSize:18.f]];
+    [AKLoadStateView setTitleFont:[UIFont systemFontOfSize:18.]];
     
     [AKLoadStateView setDetail:@"网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误网络错误" state:AKLoadStateNetworkError];
     [AKLoadStateView setDetailColor:[UIColor grayColor] state:AKLoadStateNetworkError];
-    [AKLoadStateView setDetailFont:[UIFont systemFontOfSize:14.f]];
+    [AKLoadStateView setDetailFont:[UIFont systemFontOfSize:14.]];
     
     [AKLoadStateView setRefreshButtonColor:[UIColor greenColor] state:AKLoadStateNetworkError];
     [AKLoadStateView setRefreshButtonTitle:@"重新加载123" state:AKLoadStateNetworkError];
     [AKLoadStateView setRefreshButtonTitleColor:[UIColor whiteColor] state:AKLoadStateNetworkError];
-    [AKLoadStateView setRefreshButtonFont:[UIFont systemFontOfSize:14.f]];
+    [AKLoadStateView setRefreshButtonFont:[UIFont systemFontOfSize:14.]];
     
     self.ak_startProgressHUD = YES;
     self.ak_startLoadStateView = YES;
@@ -41,7 +41,7 @@
     [self.ak_progressHUD showAnimated:YES];
     [self.ak_progressHUD hideAnimated:YES afterDelay:5];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.ak_loadStateView.state = AKLoadStateNetworkError;
     });
 }

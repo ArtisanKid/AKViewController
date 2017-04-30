@@ -38,9 +38,9 @@
     self.collectionView = ({
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.layout];
         collectionView.clipsToBounds = NO;
-        collectionView.backgroundColor = UIColor.whiteColor;
-        collectionView.delegate = self;
-        collectionView.dataSource = self;
+        collectionView.backgroundColor = [UIColor whiteColor];
+        //collectionView.delegate = self;
+        //collectionView.dataSource = self;
         [self.view addSubview:collectionView];
         collectionView;
     });
@@ -48,7 +48,7 @@
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.mas_topLayoutGuide);
         make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
-        make.leading.trailing.mas_equalTo(0.f);
+        make.leading.trailing.mas_equalTo(0.);
     }];
 }
 
@@ -59,7 +59,7 @@
 
 #pragma mark- 协议方法
 - (UIScrollView<AKScrollViewDataProtocol> *)scrollView {
-    return self.collectionView;
+    return (UIScrollView<AKScrollViewDataProtocol> *)self.collectionView;
 }
 
 #pragma mark - Interface
@@ -76,7 +76,7 @@
     }
     
     _adapter = adapter;
-    _adapter.scrollView = self.collectionView;
+    //_adapter.scrollView = (UIScrollView *)self.collectionView;
 }
 
 @end

@@ -27,7 +27,7 @@
         
         _titleLabel = ({
             UILabel *label = [[UILabel alloc] init];
-            label.font = [UIFont systemFontOfSize:16.f];
+            label.font = [UIFont systemFontOfSize:16.];
             label.textColor = [UIColor darkGrayColor];
             [label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
@@ -37,7 +37,7 @@
         
         _subTitleLabel = ({
             UILabel *label = [[UILabel alloc] init];
-            label.font = [UIFont systemFontOfSize:14.f];
+            label.font = [UIFont systemFontOfSize:14.];
             label.textColor = [UIColor lightGrayColor];
             [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.contentView addSubview:label];
@@ -48,13 +48,13 @@
         
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(AKViewControllerBoundsGap());
-            make.centerY.mas_equalTo(0.f);
+            make.centerY.mas_equalTo(0.);
         }];
         
         [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(_titleLabel.mas_trailing).offset(AKViewControllerInnerGap());
             make.trailing.mas_lessThanOrEqualTo(-AKViewControllerBoundsGap());
-            _subTitleLabel_centerY_constraint = make.centerY.mas_equalTo(0.f);
+            _subTitleLabel_centerY_constraint = make.centerY.mas_equalTo(0.);
             _subTitleLabel_bottom_constraint = make.bottom.mas_equalTo(_titleLabel.mas_bottom);
         }];
         

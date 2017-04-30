@@ -51,8 +51,8 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         self.ak_topConstraint = make.top.mas_equalTo(self.mas_topLayoutGuide);
         self.ak_bottomConstraint = make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
-        make.leading.mas_equalTo(0.f);
-        make.trailing.mas_equalTo(0.f);
+        make.leading.mas_equalTo(0.);
+        make.trailing.mas_equalTo(0.);
     }];
         
     self.adapter = [[AKTableViewAdapter alloc] init];
@@ -73,14 +73,14 @@
     self.adapter.offset = self.adapter.offsetStart;
     
     self.ak_progressHUD.mode = MBProgressHUDModeIndeterminate;
-    self.ak_progressHUD.labelText = nil;
-    [self.ak_progressHUD show:YES];
+    self.ak_progressHUD.label.text = nil;
+    [self.ak_progressHUD showAnimated:YES];
     
     self.ak_pushLoadView.state = AKPushLoadStateNormal;
     
     //记录原始数据状态
     [self AKLoadDataWithComplete:^(AKLoadDataResult (^_Nullable organizeBlock)()){
-        [self.ak_progressHUD hide:YES];
+        [self.ak_progressHUD hideAnimated:YES];
         
         [self.adapter removeAllSections];
         
@@ -91,7 +91,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView scrollRectToVisible:CGRectMake(0.f, 0.f, CGRectGetWidth(self.tableView.bounds), CGFLOAT_MIN) animated:NO];
+                    [self.tableView scrollRectToVisible:CGRectMake(0., 0., CGRectGetWidth(self.tableView.bounds), CGFLOAT_MIN) animated:NO];
                 });
             });
         } else if (result == AKLoadDataResultNoData) {
@@ -125,7 +125,7 @@
 }
 
 - (UIScrollView<AKScrollViewDataProtocol> *)scrollView {
-    return self.tableView;
+    return (UIScrollView<AKScrollViewDataProtocol> *)self.tableView;
 }
 
 - (void)setAdapter:(id<AKTableViewAdapterProtocol, AKTableViewDelegateProtocol>)adapter {
@@ -134,12 +134,12 @@
     }
     
     _adapter = adapter;
-    _adapter.scrollView = self.tableView;
+    _adapter.scrollView = (UIScrollView<AKScrollViewDataProtocol> *)self.tableView;
 }
 
 #pragma mark- 公开方法
 - (UIView *)ak_nilViewForGroupStyle {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, CGFLOAT_MIN)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0., 0., 0., CGFLOAT_MIN)];
     return view;
 }
 

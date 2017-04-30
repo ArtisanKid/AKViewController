@@ -20,7 +20,7 @@
         
         _titleLabel = ({
             UILabel *label = [[UILabel alloc] init];
-            label.font = [UIFont systemFontOfSize:16.f];
+            label.font = [UIFont systemFontOfSize:16.];
             label.textColor = [UIColor darkGrayColor];
             label.numberOfLines = 0;
             [label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -48,7 +48,7 @@
     MASAttachKeys(self, self.titleLabel)
     
     [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(0.f);
+        make.centerY.mas_equalTo(0.);
         make.leading.mas_equalTo(AKViewControllerBoundsGap());
         make.trailing.mas_equalTo(-AKViewControllerBoundsGap());
     }];
@@ -68,7 +68,7 @@
     } else if([object respondsToSelector:@selector(description)]) {
         self.titleLabel.text = [object description];
     } else {
-        AKViewControllerLog(@"传入了错误类型的显示数据", object);
+        AKViewControllerLog(@"传入了错误类型的显示数据\n%@", object);
     }
 }
 
@@ -81,10 +81,10 @@
     _ak_autoNumberOfLine = ak_auto;
     if(_ak_autoNumberOfLine) {
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(12.f);
-            make.bottom.mas_equalTo(-12.f);
-            make.leading.mas_equalTo(12.f);
-            make.trailing.mas_equalTo(-12.f);
+            make.top.mas_equalTo(12.);
+            make.bottom.mas_equalTo(-12.);
+            make.leading.mas_equalTo(12.);
+            make.trailing.mas_equalTo(-12.);
         }];
     } else {
         [self originTitleLabelConstraint];

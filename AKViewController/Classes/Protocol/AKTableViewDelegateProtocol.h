@@ -132,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) BOOL(^canPerformActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
 
 //- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
-@property (nonatomic, strong) BOOL(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
+@property (nonatomic, strong) void(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
 
 
 

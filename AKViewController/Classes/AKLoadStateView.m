@@ -12,15 +12,15 @@
 @interface AKLoadStateView ()
 
 //@{@(state), imageName}
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *backgroundColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *backgroundColorDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *imageDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *titleDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *titleColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColorDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *detailDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *detailColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *detailColorDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *refreshButtonTitleDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *refreshButtonTitleColorDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *refreshButtonColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *refreshButtonTitleColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *refreshButtonColorDicM;
 
 @property (nonatomic, strong, readwrite) UIImageView *iconImageView;
 @property (nonatomic, strong, readwrite) UILabel *titleLabel;
@@ -109,8 +109,8 @@
             [button addTarget:self action:@selector(refreshButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
             
             UIEdgeInsets insets = button.contentEdgeInsets;
-            insets.left = 16.f;
-            insets.right = 16.f;
+            insets.left = 16.;
+            insets.right = 16.;
             button.contentEdgeInsets = insets;
             
             [self addSubview:button];
@@ -128,12 +128,12 @@
         MASAttachKeys(self, topView, _iconImageView, _activityIndicatorView, _titleLabel, _detailLabel, _refreshButton, bottomView)
         
         [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(0.f);
-            make.height.mas_greaterThanOrEqualTo(64.f).priorityHigh();
+            make.top.mas_equalTo(0.);
+            make.height.mas_greaterThanOrEqualTo(64.).priorityHigh();
         }];
         
         [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(0.f);
+            make.centerX.mas_equalTo(0.);
             make.top.mas_equalTo(topView.mas_bottom);
         }];
         
@@ -142,29 +142,29 @@
         }];
         
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(_iconImageView.mas_bottom).offset(40.f);
-            make.leading.mas_equalTo(16.f);
-            make.trailing.mas_equalTo(-16.f);
+            make.top.mas_equalTo(_iconImageView.mas_bottom).offset(40.);
+            make.leading.mas_equalTo(16.);
+            make.trailing.mas_equalTo(-16.);
         }];
         
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(_titleLabel.mas_bottom).offset(10.f);
-            make.leading.mas_equalTo(16.f);
-            make.trailing.mas_equalTo(-16.f);
+            make.top.mas_equalTo(_titleLabel.mas_bottom).offset(10.);
+            make.leading.mas_equalTo(16.);
+            make.trailing.mas_equalTo(-16.);
         }];
         
         [_refreshButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            _refreshButton_height_constraint = make.height.mas_equalTo(44.f);
-            make.centerX.mas_equalTo(0.f);
-            make.top.mas_equalTo(_detailLabel.mas_bottom).offset(22.f);
-            make.leading.mas_greaterThanOrEqualTo(44.f);
-            make.trailing.mas_lessThanOrEqualTo(-44.f);
+            _refreshButton_height_constraint = make.height.mas_equalTo(44.);
+            make.centerX.mas_equalTo(0.);
+            make.top.mas_equalTo(_detailLabel.mas_bottom).offset(22.);
+            make.leading.mas_greaterThanOrEqualTo(44.);
+            make.trailing.mas_lessThanOrEqualTo(-44.);
         }];
         
         [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(topView).priorityHigh();
             make.top.mas_equalTo(_refreshButton.mas_bottom);
-            make.bottom.mas_equalTo(0.f);
+            make.bottom.mas_equalTo(0.);
         }];
         
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selfTap:)];
@@ -447,9 +447,9 @@
     
     _hideRefreshButton = hide;
     if(_hideRefreshButton) {
-        self.refreshButton_height_constraint.offset = 0.f;
+        self.refreshButton_height_constraint.offset = 0.;
     } else {
-        self.refreshButton_height_constraint.offset = 44.f;
+        self.refreshButton_height_constraint.offset = 44.;
     }
     [self layoutIfNeeded];
 }

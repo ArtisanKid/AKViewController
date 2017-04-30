@@ -14,15 +14,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-/*!
- * 加载数据
+/**
+ 加载数据
  */
 - (void)AKLoadData;
 
-/*!
- * 接收通知
+/**
+ 接收数据
+ 
+ @param data NSDictionary
+ */
+- (void)AKReceiveData:(NSDictionary *)data;
+
+/**
+ 接收通知
+
+ @param notification NSNotification
  */
 - (void)AKReceiveNotification:(NSNotification *)notification;
+
+/**
+ 接收消息
+
+ @param message NSDictionary
+ */
+- (void)AKReceiveMessage:(NSDictionary *)message;
 
 @end
 

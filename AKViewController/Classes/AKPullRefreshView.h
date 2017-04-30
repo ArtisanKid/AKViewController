@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setTitleColor:(UIColor *)color state:(AKPullRefreshState)state;
 
 + (void)setBackgroundColor:(UIColor *)color state:(AKPullRefreshState)state;
-+ (void)setIconBackgroundImage:(NSString *)imageName;
++ (void)setIconBackgroundImage:(UIImage *)image;
 + (void)setIconImage:(NSString *)imageName state:(AKPullRefreshState)state;
 
 + (void)setTitle:(NSString *)title state:(AKPullRefreshState)state;

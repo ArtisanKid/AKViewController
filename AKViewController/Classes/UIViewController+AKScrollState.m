@@ -36,7 +36,7 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
             return;
         }
         
-        id<AKScrollViewControllerProtocol> controller = self;
+        id<AKScrollViewControllerProtocol> controller = (id<AKScrollViewControllerProtocol>)self;
         UIScrollView<AKScrollViewDataProtocol> *scrollView = controller.scrollView;
         id<AKScrollViewAdapterProtocol> adapter = controller.adapter;
         
@@ -58,8 +58,8 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
             strong_self.ak_pullRefreshView.state = AKPullRefreshStateRefreshing;
             
             strong_self.ak_progressHUD.mode = MBProgressHUDModeIndeterminate;
-            strong_self.ak_progressHUD.labelText = nil;
-            [strong_self.ak_progressHUD show:YES];
+            strong_self.ak_progressHUD.label.text = nil;
+            [strong_self.ak_progressHUD showAnimated:YES];
             
             //记录原始数据状态
             NSArray *datas = adapter.datas;
@@ -68,7 +68,7 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
             adapter.offset = adapter.offsetStart;
             
             [strong_controller AKLoadDataWithComplete:^ (AKLoadDataResult (^_Nullable organizeBlock)()){
-                [strong_self.ak_progressHUD hide:YES];
+                [strong_self.ak_progressHUD hideAnimated:YES];
                 strong_self.ak_pullRefreshView.state = AKPullRefreshStateFinishRefresh;
                 
                 adapter.datas = nil;
@@ -103,16 +103,16 @@ static NSMapTable *ak_pullRefreshViewMapTable = nil;
     [self.view bringSubviewToFront:view];
     return view;
 }
-//- (void)setAk_pullRefreshView:(AKPullRefreshView *)ak_pullRefreshView {
-//    AKPullRefreshView *view = [ak_pullRefreshViewMapTable objectForKey:@(self.hash).description];
-//    if([view isEqual:ak_pullRefreshView]) {
-//        return;
-//    }
-//    [view stopObserver];
-//    
-//    [ak_pullRefreshViewMapTable setObject:ak_pullRefreshView forKey:@([self hash]).description];
-//    [ak_pullRefreshView startObserver];
-//}
+- (void)setAk_pullRefreshView:(AKPullRefreshView *)ak_pullRefreshView {
+    AKPullRefreshView *view = [ak_pullRefreshViewMapTable objectForKey:@(self.hash).description];
+    if([view isEqual:ak_pullRefreshView]) {
+        return;
+    }
+    [view stopObserver];
+    
+    [ak_pullRefreshViewMapTable setObject:ak_pullRefreshView forKey:@([self hash]).description];
+    [ak_pullRefreshView startObserver];
+}
 
 #pragma mark- PushLoadView
 
@@ -135,7 +135,7 @@ static NSMapTable *ak_pushLoadViewMapTable = nil;
             return;
         }
         
-        id<AKScrollViewControllerProtocol> controller = self;
+        id<AKScrollViewControllerProtocol> controller = (id<AKScrollViewControllerProtocol>)self;
         UIScrollView<AKScrollViewDataProtocol> *scrollView = controller.scrollView;
         id<AKScrollViewAdapterProtocol> adapter = controller.adapter;
         

@@ -11,9 +11,9 @@
 #import <objc/runtime.h>
 #import "AKViewControllerMacro.h"
 
-CGFloat AKTableViewComponentHeightAuto = -1.f;
+CGFloat AKTableViewComponentHeightAuto = -1.;
 
-@interface AKTableViewAdapter()
+@interface AKTableViewAdapter()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) NSUInteger pageSize;
 @property (nonatomic, assign) NSUInteger offsetStart;
@@ -68,11 +68,11 @@ CGFloat AKTableViewComponentHeightAuto = -1.f;
 
 @property (nonatomic, strong) BOOL(^shouldShowMenuForRow)(UITableView *tableView, NSIndexPath *indexPath);
 @property (nonatomic, strong) BOOL(^canPerformActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
-@property (nonatomic, strong) BOOL(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
+@property (nonatomic, strong) void(^performActionForRow)(UITableView *tableView, SEL action, NSIndexPath *indexPath, id sender);
 
 @property (nonatomic, strong) BOOL(^canFocusRow)(UITableView *tableView, NSIndexPath *indexPath) NS_AVAILABLE_IOS(9_0);
 @property (nonatomic, strong) BOOL(^shouldUpdateFocus)(UITableView *tableView, UITableViewFocusUpdateContext *context) NS_AVAILABLE_IOS(9_0);
-@property (nonatomic, strong) BOOL(^didUpdateFocus)(UITableView *tableView, UITableViewFocusUpdateContext *context, UIFocusAnimationCoordinator *coordinator) NS_AVAILABLE_IOS(9_0);
+@property (nonatomic, strong) void(^didUpdateFocus)(UITableView *tableView, UITableViewFocusUpdateContext *context, UIFocusAnimationCoordinator *coordinator) NS_AVAILABLE_IOS(9_0);
 @property (nonatomic, strong) NSIndexPath *(^indexPathForPreferredFocusedView)(UITableView *tableView) NS_AVAILABLE_IOS(9_0);
 
 #pragma mark- AKScrollViewDelegateProtocol
@@ -417,7 +417,7 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         if(height) {
             if(self.tableView.separatorStyle == UITableViewCellSeparatorStyleSingleLine) {
-                height += 1.f;
+                height += 1.;
             }
             
             //有高度的情况下判断是否比最小高度大，否则取最小高度
@@ -425,7 +425,7 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
                 CGFloat minHeight = [row.cell AKMinimumHeight];
                 if(minHeight) {
                     if(self.tableView.separatorStyle == UITableViewCellSeparatorStyleSingleLine) {
-                        minHeight += 1.f;
+                        minHeight += 1.;
                     }
                     
                     if(minHeight > height) {
@@ -438,12 +438,12 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         }
     }
     
-    return 0.f;
+    return 0.;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     id<AKTableViewSectionViewProtocol> view = self.sections[section].header;
     if(!view) {
-        return tableView.style == UITableViewStylePlain ? 0.f : CGFLOAT_MIN;
+        return tableView.style == UITableViewStylePlain ? 0. : CGFLOAT_MIN;
     }
     
     if(view.height != AKTableViewComponentHeightAuto) {
@@ -464,12 +464,12 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         }
     }
     
-    return tableView.style == UITableViewStylePlain ? 0.f : CGFLOAT_MIN;
+    return tableView.style == UITableViewStylePlain ? 0. : CGFLOAT_MIN;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     id<AKTableViewSectionViewProtocol> view = self.sections[section].footer;
     if(!view) {
-        return tableView.style == UITableViewStylePlain ? 0.f : CGFLOAT_MIN;
+        return tableView.style == UITableViewStylePlain ? 0. : CGFLOAT_MIN;
     }
     
     if(view.height != AKTableViewComponentHeightAuto) {
@@ -490,26 +490,26 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         }
     }
     
-    return tableView.style == UITableViewStylePlain ? 0.f : CGFLOAT_MIN;
+    return tableView.style == UITableViewStylePlain ? 0. : CGFLOAT_MIN;
 }
 
 // Use the estimatedHeight methods to quickly calcuate guessed values which will allow for fast load times of the table.
 // If these methods are implemented, the above -tableView:heightForXXX calls will be deferred until views are ready to be displayed, so more expensive logic can be placed there.
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(!self.estimatedHeightForRow) {
-        return 0.f;
+        return 0.;
     }
     return self.estimatedHeightForRow(tableView, indexPath);
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     if(!self.estimatedHeightForHeader) {
-        return 0.f;
+        return 0.;
     }
     return self.estimatedHeightForHeader(tableView, section);
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section {
     if(!self.estimatedHeightForFooter) {
-        return 0.f;
+        return 0.;
     }
     return self.estimatedHeightForFooter(tableView, section);
 }
@@ -528,7 +528,7 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         view = [[_section.header.view alloc] initWithReuseIdentifier:_section.header.identifier];
     }
     
-    if([view respondsToSelector:@selector(AKDrawView:)]) {
+    if([view respondsToSelector:@selector(AKDrawContent:)]) {
         [view AKDrawContent:_section.header.objToDraw];
     }
     return view;
@@ -540,12 +540,12 @@ static OSSpinLock AKTableViewAdapterLock = OS_SPINLOCK_INIT;
         return nil;
     }
     
-    id<AKViewProtocol> view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:_section.footer.identifier];
+    UITableViewHeaderFooterView<AKViewProtocol> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:_section.footer.identifier];
     if(!view) {
         view = [[_section.footer.view alloc] initWithReuseIdentifier:_section.header.identifier];
     }
     
-    if([view respondsToSelector:@selector(AKDrawView:)]) {
+    if([view respondsToSelector:@selector(AKDrawContent:)]) {
         [view AKDrawContent:_section.footer.objToDraw];
     }
     return view;

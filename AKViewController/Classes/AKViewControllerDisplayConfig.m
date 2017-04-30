@@ -8,7 +8,7 @@
 
 #import "AKViewControllerDisplayConfig.h"
 
-static CGFloat AKViewController_Bounds_Gap = 0.f;
+static CGFloat AKViewController_Bounds_Gap = 0.;
 void AKViewControllerSetBoundsGap(CGFloat gap) {
     AKViewController_Bounds_Gap = gap;
 }
@@ -16,7 +16,7 @@ CGFloat AKViewControllerBoundsGap() {
     return AKViewController_Bounds_Gap;
 }
 
-CGFloat AKViewController_Inner_Gap = 0.f;
+CGFloat AKViewController_Inner_Gap = 0.;
 void AKViewControllerSetInnerGap(CGFloat gap) {
     AKViewController_Inner_Gap = gap;
 }
@@ -24,7 +24,7 @@ CGFloat AKViewControllerInnerGap() {
     return AKViewController_Inner_Gap;
 }
 
-CGFloat AKViewController_Base_Cell_Height = 44.f;
+CGFloat AKViewController_Base_Cell_Height = 44.;
 void AKViewControllerSetBaseCellHeight(CGFloat height) {
     AKViewController_Base_Cell_Height = height;
 }

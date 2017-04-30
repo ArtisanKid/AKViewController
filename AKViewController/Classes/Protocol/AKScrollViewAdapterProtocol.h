@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, getter=isAutoReloadData) BOOL autoReloadData;
 
 //AKScrollViewAdapter存储的数据数组
-@property (nonatomic, strong) NSArray<id/*不同子类指定不同类型*/> *datas;
+@property (nonatomic, strong, nullable) NSArray<id/*不同子类指定不同类型*/> *datas;
 
 @end
 

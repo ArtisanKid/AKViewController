@@ -32,7 +32,7 @@
         });
 
         [_wholeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(0.f);
+            make.edges.mas_equalTo(0.);
         }];
     }
     return self;

@@ -18,7 +18,6 @@
 @property (nonatomic, strong) id<AKCollectionViewAdapterProtocol, AKCollectionViewDelegateProtocol> adapter;
 
 #pragma mark - Interface
-- (instancetype)init;
 @property (nonatomic, strong) UICollectionViewLayout *layout;
 @property (nonatomic, strong, readonly) UICollectionView *collectionView;
 

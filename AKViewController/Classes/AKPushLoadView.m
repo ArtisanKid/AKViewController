@@ -11,15 +11,15 @@
 #import <KVOController/KVOController.h>
 #import <Reachability/Reachability.h>
 
-#define AKPushLoadViewLoadTriggerHeight 68.f
-#define AKPushLoadViewLoadHeight 60.f
-#define AKPushLoadViewTitleTopToTop 24.f
+#define AKPushLoadViewLoadTriggerHeight 68.
+#define AKPushLoadViewLoadHeight 60.
+#define AKPushLoadViewTitleTopToTop 24.
 
 @interface AKPushLoadView ()
 
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *backgroundColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *backgroundColorDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *titleDicM;
-@property (nonatomic, strong) NSMutableDictionary<UIColor *, NSString *> *titleColorDicM;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColorDicM;
 
 @property (nonatomic, strong, readwrite) UILabel *titleLabel;
 @property (nonatomic, strong, readwrite) UIActivityIndicatorView *loadActivityIndicatorView;
@@ -78,16 +78,16 @@
             MASAttachKeys(self, _loadActivityIndicatorView, _titleLabel);
             
             [_loadActivityIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(0.f);
-                make.bottom.mas_equalTo(0.f);
-                make.leading.mas_equalTo(0.f);
+                make.top.mas_equalTo(0.);
+                make.bottom.mas_equalTo(0.);
+                make.leading.mas_equalTo(0.);
             }];
             
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.mas_equalTo(0.f);
-                _normalConstraint = make.leading.mas_equalTo(0.f);
-                _loadingConstraint = make.leading.mas_equalTo(_loadActivityIndicatorView.mas_trailing).offset(10.f);
-                make.trailing.mas_equalTo(0.f);
+                make.centerY.mas_equalTo(0.);
+                _normalConstraint = make.leading.mas_equalTo(0.);
+                _loadingConstraint = make.leading.mas_equalTo(_loadActivityIndicatorView.mas_trailing).offset(10.);
+                make.trailing.mas_equalTo(0.);
             }];
             [_loadingConstraint deactivate];
             
@@ -99,8 +99,8 @@
         MASAttachKeys(self, containerView);
         
         [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(0.f);
-            make.top.mas_equalTo(22.f);
+            make.centerX.mas_equalTo(0.);
+            make.top.mas_equalTo(22.);
         }];
         
         ////////////////////////////////////////////////////////////////////////////////////
@@ -110,13 +110,13 @@
         [_reachability setReachableBlock:^(Reachability * reachability) {
             __strong typeof(weak_self) strong_self = weak_self;
             if(strong_self.state == AKPushLoadStateNoNetwork) {
-                strong_self.state == AKPushLoadStateNormal;
+                strong_self.state = AKPushLoadStateNormal;
             }
         }];
         [_reachability setUnreachableBlock:^(Reachability * reachability) {
             __strong typeof(weak_self) strong_self = weak_self;
             if(strong_self.state == AKPushLoadStateNormal) {
-                strong_self.state == AKPushLoadStateNoNetwork;
+                strong_self.state = AKPushLoadStateNoNetwork;
             }
         }];
         [_reachability startNotifier];
@@ -212,7 +212,7 @@
         }
         
         //contentOffset负数值表示下拉
-        //contentOffset.y的初始值为originContentInsetTop的负值，比如-64.f
+        //contentOffset.y的初始值为originContentInsetTop的负值，比如-64.
         CGPoint contentOffset;
         [change[@"new"] getValue:&contentOffset];
         
@@ -264,7 +264,7 @@
         CGFloat visualHeight = scrollView.frame.size.height - scrollView.contentInset.top - scrollView.contentInset.bottom;
         
         //控件应该存在于视图外
-        CGFloat y = 0.f;
+        CGFloat y = 0.;
         if(visualHeight > contentSize.height) {
             y = visualHeight;
             self.currentContentToBottom = visualHeight - contentSize.height;
