@@ -352,7 +352,7 @@
     }
 }
 
-UIColor *AKPushLoadView_TitleFont = nil;
+UIFont *AKPushLoadView_TitleFont = nil;
 + (void)setTitleFont:(UIFont *)font {
     AKPushLoadView_TitleFont = font;
 }

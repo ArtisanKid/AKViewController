@@ -7,8 +7,7 @@
 //
 
 @import UIKit;
-#import <AKViewController/AKViewController.h>
 
-@interface AKViewController1 : AKViewController
+@interface AKViewController1 : UIViewController
 
 @end

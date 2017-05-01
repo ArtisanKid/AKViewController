@@ -21,7 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     [AKLoadStateView setBackgroundColor:[UIColor blueColor] state:AKLoadStateNetworkError];
-    [AKLoadStateView setImage:@"state_no_wifi" state:AKLoadStateNetworkError];
+    [AKLoadStateView setImage:[UIImage imageNamed:@""] state:AKLoadStateNetworkError];
     [AKLoadStateView setTitle:@"网络错误" state:AKLoadStateNetworkError];
     [AKLoadStateView setTitleColor:[UIColor grayColor] state:AKLoadStateNetworkError];
     [AKLoadStateView setTitleFont:[UIFont systemFontOfSize:18.]];

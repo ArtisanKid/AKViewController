@@ -19,7 +19,6 @@
 @interface AKPullRefreshView ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *backgroundColorDicM;
-@property (nonatomic, strong) NSString *iconBackgroundImage;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIImage *> *iconImageDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *titleDicM;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColorDicM;
@@ -45,14 +44,11 @@
         /**
          *  初始化赋值
          */
-        _backgroundColorDicM = [[[self class] backgroundColorDicM] mutableCopy];
-        _iconImageDicM = [[[self class] iconImageDicM] mutableCopy];
-        _titleDicM = [[[self class] titleDicM] mutableCopy];
-        _titleColorDicM = [[[self class] titleColorDicM] mutableCopy];
+        
         
         ///////////////////////////////////
         
-        self.backgroundColor = _backgroundColorDicM[@(AKPullRefreshStateNormal)];
+        self.backgroundColor = self.backgroundColorDicM[@(AKPullRefreshStateNormal)];
         
         UIView *containerView = ({
             UIView *view = [[UIView alloc] init];
@@ -65,7 +61,7 @@
             [view addSubview:_iconBackgroundImageView];
             
             _iconImageView = [[UIImageView alloc] init];
-            _iconImageView.image = [UIImage imageNamed:_iconImageDicM[@(AKPullRefreshStateNormal)]];
+            _iconImageView.image = _iconImageDicM[@(AKPullRefreshStateNormal)];
             _iconImageView.contentMode = UIViewContentModeBottom;
             _iconImageView.clipsToBounds = YES;
             [view addSubview:_iconImageView];
@@ -148,28 +144,28 @@
 #pragma mark - 属性方法
 - (NSMutableDictionary *)backgroundColorDicM {
     if(!_backgroundColorDicM) {
-        _backgroundColorDicM = [NSMutableDictionary dictionary];
+        _backgroundColorDicM = [[[self class] backgroundColorDicM] mutableCopy];
     };
     return _backgroundColorDicM;
 }
 
 - (NSMutableDictionary *)iconImageDicM {
     if(!_iconImageDicM) {
-        _iconImageDicM = [NSMutableDictionary dictionary];
+        _iconImageDicM = [[[self class] iconImageDicM] mutableCopy];
     }
     return _iconImageDicM;
 }
 
 - (NSMutableDictionary *)titleDicM {
     if(!_titleDicM) {
-        _titleDicM = [NSMutableDictionary dictionary];
+        _titleDicM = [[[self class] titleDicM] mutableCopy];
     }
     return _titleDicM;
 }
 
 - (NSMutableDictionary *)titleColorDicM {
     if(!_titleColorDicM) {
-        _titleColorDicM = [NSMutableDictionary dictionary];
+        _titleColorDicM = [[[self class] titleColorDicM] mutableCopy];
     }
     return _titleColorDicM;
 }
@@ -312,6 +308,7 @@
         self.backgroundColorDicM[@(AKPullRefreshStatePause)] = color;
     }
 }
+
 - (void)setIconImage:(UIImage *)image state:(AKPullRefreshState)state {
     self.iconImageDicM[@(state)] = image;
     if(self.state == state) {
@@ -325,6 +322,7 @@
         self.titleLabel.text = title;
     }
 }
+
 - (void)setTitleColor:(UIColor *)color state:(AKPullRefreshState)state {
     self.titleColorDicM[@(state)] = color;
     if(self.state == state) {
@@ -358,16 +356,16 @@ UIImage *AKPullRefreshView_IconBackgroundImage = nil;
     AKPullRefreshView_IconBackgroundImage = image;
 }
 
-+ (void)setImage:(NSString *)imageName state:(AKPullRefreshState)state {
++ (void)setIconImage:(UIImage *)image state:(AKPullRefreshState)state {
     NSMutableDictionary *iconImageDicM = [self iconImageDicM];
     
-    iconImageDicM[@(state)] = imageName;
+    iconImageDicM[@(state)] = image;
     if(state == AKPullRefreshStateNormal) {
-        iconImageDicM[@(AKPullRefreshStateReadyToRefresh)] = imageName;
-        iconImageDicM[@(AKPullRefreshStateRefreshing)] = imageName;
-        iconImageDicM[@(AKPullRefreshStateFinishRefresh)] = imageName;
-        iconImageDicM[@(AKPullRefreshStateNoNetwork)] = imageName;
-        iconImageDicM[@(AKPullRefreshStatePause)] = imageName;
+        iconImageDicM[@(AKPullRefreshStateReadyToRefresh)] = image;
+        iconImageDicM[@(AKPullRefreshStateRefreshing)] = image;
+        iconImageDicM[@(AKPullRefreshStateFinishRefresh)] = image;
+        iconImageDicM[@(AKPullRefreshStateNoNetwork)] = image;
+        iconImageDicM[@(AKPullRefreshStatePause)] = image;
     }
 }
 

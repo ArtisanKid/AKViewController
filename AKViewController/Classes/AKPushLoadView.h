@@ -43,12 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark- 配置方法
 - (void)setBackgroundColor:(UIColor *)color state:(AKPushLoadState)state;
-
 - (void)setTitle:(NSString *)title state:(AKPushLoadState)state;
 - (void)setTitleColor:(UIColor *)color state:(AKPushLoadState)state;
 
 + (void)setBackgroundColor:(UIColor *)color state:(AKPushLoadState)state;
-
 + (void)setTitle:(NSString *)title state:(AKPushLoadState)state;
 + (void)setTitleColor:(UIColor *)color state:(AKPushLoadState)state;
 + (void)setTitleFont:(UIFont *)font;

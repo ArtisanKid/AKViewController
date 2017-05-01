@@ -517,8 +517,8 @@
     [self backgroundColorDicM][@(state)] = color;
 }
 
-+ (void)setImage:(NSString *)imageName state:(AKLoadState)state {
-    [self imageDicM][@(state)] = imageName;
++ (void)setImage:(UIImage *)image state:(AKLoadState)state {
+    [self imageDicM][@(state)] = image;
 }
 
 + (void)setTitle:(NSString *)title state:(AKLoadState)state {
@@ -529,7 +529,7 @@
     [self titleColorDicM][@(state)] = color;
 }
 
-UIColor *AKLoadStateView_TitleFont = nil;
+UIFont *AKLoadStateView_TitleFont = nil;
 + (void)setTitleFont:(UIFont *)font {
     AKLoadStateView_TitleFont = font;
 }
@@ -542,7 +542,7 @@ UIColor *AKLoadStateView_TitleFont = nil;
     [self detailColorDicM][@(state)] = color;
 }
 
-UIColor *AKLoadStateView_DetailFont = nil;
+UIFont *AKLoadStateView_DetailFont = nil;
 + (void)setDetailFont:(UIFont *)font {
     AKLoadStateView_DetailFont = font;
 }
@@ -559,7 +559,7 @@ UIColor *AKLoadStateView_DetailFont = nil;
     [self refreshButtonTitleColorDicM][@(state)] = color;
 }
 
-UIColor *AKLoadStateView_RefreshButtonFont = nil;
+UIFont *AKLoadStateView_RefreshButtonFont = nil;
 + (void)setRefreshButtonFont:(UIFont *)font {
     AKLoadStateView_RefreshButtonFont = font;
 }

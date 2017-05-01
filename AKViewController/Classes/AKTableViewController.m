@@ -56,7 +56,7 @@
     }];
         
     self.adapter = [[AKTableViewAdapter alloc] init];
-    self.adapter.offsetStart = 1;
+    self.adapter.offsetStart = 0;
     self.tableView.delegate = self.adapter;
     self.tableView.dataSource = self.adapter;
 }

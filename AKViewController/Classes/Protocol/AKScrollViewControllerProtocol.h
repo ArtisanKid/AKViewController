@@ -16,10 +16,12 @@
 typedef NS_ENUM(NSUInteger, AKLoadDataResult) {
     AKLoadDataResultNone = 0,
     
-    //加载新数据。包括下拉刷新成功和上拉加载数据
+    //加载新数据。包括下拉刷新成功和上拉加载成功
     AKLoadDataResultNewData = 1,
-    //加载未返回数据。包括下拉刷新无数据和上拉加载无数据
+    
+    //未返回数据。包括下拉刷新无数据和上拉加载无数据
     AKLoadDataResultNoData,
+    
     //加载数据失败
     AKLoadDataResultFailed
 };

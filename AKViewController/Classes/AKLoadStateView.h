@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, getter=isHideRefreshButton) BOOL hideRefreshButton;
 
 - (void)setBackgroundColor:(UIColor *)color state:(AKLoadState)state;
-- (void)setImage:(NSString *)imageName state:(AKLoadState)state;
+- (void)setImage:(UIImage *)image state:(AKLoadState)state;
 
 - (void)setTitle:(NSString *)title state:(AKLoadState)state;
 - (void)setTitleColor:(UIColor *)color state:(AKLoadState)state;
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark- 配置方法
 + (void)setBackgroundColor:(UIColor *)color state:(AKLoadState)state;
-+ (void)setImage:(NSString *)imageName state:(AKLoadState)state;
++ (void)setImage:(UIImage *)image state:(AKLoadState)state;
 
 + (void)setTitle:(NSString *)title state:(AKLoadState)state;
 + (void)setTitleColor:(UIColor *)color state:(AKLoadState)state;
